@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Gato</title>
+</head>
+<body>
+    <header>
+        <h1>Tic Tac Toe</h1>
+    </header>
+
+    <div class="score-board">
+        <div id="user-badge" class="badges">user</div>
+        <div id="comp-badge" class="badges">comp</div>
+        <span id="user-score">0</span>:<span id="comp-score">0</span>
+    </div>
+
+    <div class="result">Let's play!</div>
+
+    <div class="game-board">
+        <table>
+            <tr>
+                <td class="cells" id="0"></td>
+                <td class="cells" id="1"></td>
+                <td class="cells" id="2"></td>
+            </tr>
+            <tr>
+                <td class="cells" id="3"></td>
+                <td class="cells" id="4"></td>
+                <td class="cells" id="5"></td>
+            </tr>
+            <tr>
+                <td class="cells" id="6"></td>
+                <td class="cells" id="7"></td>
+                <td class="cells" id="8"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="endgame">
+        <div class="text"></div>
+    </div>
+
+    <p id="action-messege">Make your move</p>
+    <button onclick="restartGame()" class="button-click">Restart</button>
+
+    <script src="app.js" charset="utf-8"></script>
+</body>
+</html>
