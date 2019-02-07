@@ -14,6 +14,12 @@ const winCombo =
     ];
 const cells_td = document.querySelectorAll(".cells");
 const endGame_button = document.querySelector(".endgame");
+const endGame_text = document.querySelector(".endgame .text");
+let playerScore = 1;
+let compScore = 1;
+const playerScore_span = document.getElementById("user-score");
+const compScore_span = document.getElementById("comp-score");
+
 
 startGame();
 
@@ -35,15 +41,46 @@ function startGame(){
 }
 
 function cellClick(result){
-    letsPlay(result.target.id, player); //ejecutamos una nueva funcion, y le pasamos por parametro la id y el jugador
+    if (typeof gameBoard[result.target.id] == 'number') { //Si el tipo que se encuentra en el array es un number, entonces se puede jugar
+        letsPlay(result.target.id, player); //ejecutamos una nueva funcion, y le pasamos por parametro la id y el jugador
+        
+        if (!checkWin(gameBoard,player) && !checkGameBoard()) letsPlay(computerChoice(), computer);
+    }
 }
+
 
 function letsPlay(option, player){
     gameBoard[option] = player; //seteamos los valores por el jugador
-
     document.getElementById(option).innerHTML = player;
     let gameWon = checkWin(gameBoard, player);
     if (gameWon) gameOver(gameWon);
+}
+
+
+function checkGameBoard(){
+    if (checkEmptyCells().length == 0) {
+        for (let i = 0; i < gameBoard.length; i++) {
+            cells_td[i].style.backgroundColor = '#2E4756';
+            cells_td[i].removeEventListener('click', cellClick);
+            cells_td[i].className = "gameDraw";
+        }
+        winnerMessege("¡Draw!");
+        return true;
+    }
+    return false;
+}
+
+function winnerMessege(winner){
+    endGame_button.style.display = "block";
+    endGame_text.innerHTML = winner;
+}
+
+function computerChoice(){
+    return checkEmptyCells()[0]; //nos retorna el primer valor del arreglo que encuentra esa función
+}
+
+function checkEmptyCells(){
+    return gameBoard.filter(e => typeof e == 'number');
 }
 
 function checkWin(board, player){
@@ -55,7 +92,6 @@ function checkWin(board, player){
                                         //put pasaria a ser rellanado con un array, en base al index del arreglo
     (e === player) ? acc.concat(i) : acc, []);
     let gameWon = null;
-    console.log(winCombo);
     for (const [index, result] of winCombo.entries()) { //Se rescata el index y los valores para ganar del arreglo winCombo
         /*
             Por cada elemento que se encuentra en result, en este caso [0,1,2],
@@ -68,19 +104,26 @@ function checkWin(board, player){
             break;
         }
     }
-    console.log(gameWon);
     return gameWon;
 }
 
 function gameOver(game){
     for (const index of winCombo[game.index]) {
-        console.log(index);
         document.getElementById(index).className = 
-            game.player == player ? "gameWin" : 'gameLose';
+            game.player == player ? 'gameWin' : 'gameLose';
     }
 
     for (let i = 0; i < cells_td.length; i++) {
         cells_td[i].removeEventListener('click', cellClick);
     }
+
+    winnerMessege(game.player == player ? "¡You win!" : "¡You lose!");
+    getScore(game.player);
 }
+
+function getScore(playerWon){
+    return playerWon == player ?  playerScore_span.innerHTML = playerScore++ : compScore_span.innerHTML = compScore++; 
+}
+
+
 

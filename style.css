@@ -148,7 +148,7 @@ table tr td:last-child{
     border-radius: 10px;
     position: absolute;
     left: 50%;
-    margin-left: -50px;
+    margin-left: -150px;
     outline: none; 
 }
 
@@ -161,11 +161,61 @@ table tr td:last-child{
 
 .gameWin{
     font-size: 80px;
+    border: solid 3px #0E1C36;
+    border-radius: 15px;
     width: 150px;
     height: 100px;
     cursor: pointer;
+    background: #73BA9B;
+    color: #F9FBF2;
+}
+
+.gameLose{
+    font-size: 80px;
     border: solid 3px #0E1C36;
-    background-color: #2E4756;
+    border-radius: 15px;
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+    background: #BF4342;
+    color: #F9FBF2;
+}
+
+.gameDraw{
+    font-size: 80px;
+    border: solid 3px #0E1C36;
     color: #F9FBF2;
     border-radius: 15px;
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+    background: #2F6690;
 }
+
+.endgame > .text{
+    font-size: 50px;
+    margin-top: 40px;
+    color: #F9FBF2;
+}
+
+.button-score{
+    background-color: #2F6690;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: 0px;
+    outline: none; 
+}
+
+.button-score:hover{
+    box-shadow: 0 5px 6px 0 rgba(14, 28, 54, 0.8), 0 5px 10px 0 rgba(0,0,0,0.19);
+    cursor: pointer;
+    background-color: #2E4756;
+    transition: all 0.3s ease;
+}
+

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <title>Tick Tack Toe</title>
+    <title>Tic Tac Toe</title>
 </head>
 <body>
     <header>
-        <h1>Tick Tack Toe</h1>
+        <h1>Tic Tac Toe</h1>
     </header>
 
     <div class="score-board">
@@ -43,8 +43,11 @@
     </div>
 
     <p id="action-messege">Make your move</p>
-    <button onclick="startGame()" class="button-click">Restart</button>
-
+    <div class="buttons">
+        <button onclick="startGame()" class="button-click">Restart Game</button>
+        <button onclick="restartScore()" class="button-score">Restart Score</button>        
+    </div>
+    
     <script src="app.js" charset="utf-8"></script>
 </body>
 </html>
