@@ -3,14 +3,14 @@ const player = "O";
 const computer = "X";
 const winCombo =
     [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,4,8],
-        [6,4,2],
-        [1,4,7],
-        [2,5,8],
-        [0,3,6]
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [6, 4, 2]
     ];
 const cells_td = document.querySelectorAll(".cells");
 const endGame_button = document.querySelector(".endgame");
@@ -43,16 +43,15 @@ function startGame(){
 function cellClick(result){
     if (typeof gameBoard[result.target.id] == 'number') { //Si el tipo que se encuentra en el array es un number, entonces se puede jugar
         letsPlay(result.target.id, player); //ejecutamos una nueva funcion, y le pasamos por parametro la id y el jugador
-        
         if (!checkWin(gameBoard,player) && !checkGameBoard()) letsPlay(computerChoice(), computer);
     }
 }
 
 
-function letsPlay(option, player){
-    gameBoard[option] = player; //seteamos los valores por el jugador
-    document.getElementById(option).innerHTML = player;
-    let gameWon = checkWin(gameBoard, player);
+function letsPlay(option, players){
+    gameBoard[option] = players; //seteamos los valores por el jugador
+    document.getElementById(option).innerHTML = players;
+    let gameWon = checkWin(gameBoard, players);
     if (gameWon) gameOver(gameWon);
 }
 
@@ -76,11 +75,71 @@ function winnerMessege(winner){
 }
 
 function computerChoice(){
-    return checkEmptyCells()[0]; //nos retorna el primer valor del arreglo que encuentra esa función
+    //return checkEmptyCells()[0]; //nos retorna el primer valor del arreglo que encuentra esa función
+    //Minimax Algorithm, nos sirve para que la el nivel de IA sea más complejo y el usuario no pueda ganar nunca.
+    return miniMax(gameBoard, computer).index;
 }
 
+
+function miniMax(newBoard, players){
+    var availCells = checkEmptyCells(); //Seteamos una variable con las celdas que no han sido jugadas
+ 
+    if (checkWin(newBoard, player)) {
+        return {score: -10}; //Si el humano gana con esa posición se retorna un score de -10
+    }else if(checkWin(newBoard, computer)) {
+        return {score: 10}; //Si la AI gana se retorna un score de +10
+    }else if(availCells.length === 0) {
+        return {score: 0}; //Si hay un empate se retorna un score de 0
+    } 
+
+    var moves = [];
+
+    for (var i = 0; i < availCells.length; i++) {
+        var move = {};
+        move.index = newBoard[availCells[i]];//Le seteamos el index con la celda que no ha sido seleccionada
+        newBoard[availCells[i]] = players; //seteamos la celda con el player, en este caso usuario o computadora.
+        
+        if (players == computer) {
+            var result = miniMax(newBoard, player);
+            move.score = result.score;
+        }
+        else{
+            var result = miniMax(newBoard, computer);
+            move.score = result.score;
+        }
+
+        newBoard[availCells[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    var bestMove;
+    if (players == computer) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return moves[bestMove];
+}
+
+
+
 function checkEmptyCells(){
-    return gameBoard.filter(e => typeof e == 'number');
+    return gameBoard.filter(e => typeof e == 'number');//Realiza un filtro al arreglo para saber si los datos son de tipo number
 }
 
 function checkWin(board, player){
@@ -88,11 +147,12 @@ function checkWin(board, player){
         Se recorre el arreglo del juego, en caso de que el elemento sea igual a player, se concatena con el index del arreglo,
         en caso de que el elemento no sea igual a player no se concatena nada.
     */
+    
     let put = board.reduce((acc,e,i) => //La funcion reduce nos sirve para generar un arreglo nuevo, por lo que la variable
                                         //put pasaria a ser rellanado con un array, en base al index del arreglo
-    (e === player) ? acc.concat(i) : acc, []);
+    (e == player) ? acc.concat(i) : acc, []);
     let gameWon = null;
-    for (const [index, result] of winCombo.entries()) { //Se rescata el index y los valores para ganar del arreglo winCombo
+    for (let [index, result] of winCombo.entries()) { //Se rescata el index y los valores para ganar del arreglo winCombo
         /*
             Por cada elemento que se encuentra en result, en este caso [0,1,2],
             se verficiara si la variable put tiene un valor mayor a 0, para eso nos sirve indexOf.
@@ -108,7 +168,7 @@ function checkWin(board, player){
 }
 
 function gameOver(game){
-    for (const index of winCombo[game.index]) {
+    for (let index of winCombo[game.index]) {
         document.getElementById(index).className = 
             game.player == player ? 'gameWin' : 'gameLose';
     }
@@ -123,6 +183,13 @@ function gameOver(game){
 
 function getScore(playerWon){
     return playerWon == player ?  playerScore_span.innerHTML = playerScore++ : compScore_span.innerHTML = compScore++; 
+}
+
+function restartScore(){
+    playerScore = 1;
+    compScore = 1;
+    playerScore_span.innerHTML = 0;
+    compScore_span.innerHTML = 0;
 }
 
 

@@ -127,7 +127,7 @@ table tr td:last-child{
     width: 300px;
     height: 150px;
     top: 300px;
-    background:rgba(14, 28, 54, 0.8);
+    background-color:rgba(14, 28, 54, 0.8);
     position: absolute;
     left: 50%;
     margin-left: -150px;
@@ -139,23 +139,20 @@ table tr td:last-child{
 }
 
 .button-click{
-    background-color: #2F6690;
+    background-color:#C8D5B9;
     border: none;
     color: white;
     padding: 10px 25px;
     text-align: center;
     font-size: 16px;
     border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    margin-left: -150px;
     outline: none; 
 }
 
 .button-click:hover{
     box-shadow: 0 5px 6px 0 rgba(14, 28, 54, 0.8), 0 5px 10px 0 rgba(0,0,0,0.19);
     cursor: pointer;
-    background-color: #2E4756;
+    background-color: #8FC0A9;
     transition: all 0.3s ease;
 }
 
@@ -194,28 +191,29 @@ table tr td:last-child{
 
 .endgame > .text{
     font-size: 50px;
-    margin-top: 40px;
+    margin-top: 20px;
     color: #F9FBF2;
 }
 
 .button-score{
-    background-color: #2F6690;
+    background-color: #C8D5B9;
     border: none;
-    color: white;
+    color: black;
+    font-weight: bold;
     padding: 10px 25px;
     text-align: center;
     font-size: 16px;
     border-radius: 10px;
     position: absolute;
     left: 50%;
-    margin-left: 0px;
+    margin-left: -80px;
     outline: none; 
 }
 
 .button-score:hover{
     box-shadow: 0 5px 6px 0 rgba(14, 28, 54, 0.8), 0 5px 10px 0 rgba(0,0,0,0.19);
     cursor: pointer;
-    background-color: #2E4756;
+    background-color: #8FC0A9;
     transition: all 0.3s ease;
 }
 
