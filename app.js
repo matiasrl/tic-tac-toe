@@ -63,7 +63,7 @@ function checkGameBoard(){
             cells_td[i].removeEventListener('click', cellClick);
             cells_td[i].className = "gameDraw";
         }
-        winnerMessege("¡Draw!");
+        winnerMessege("¡Tie!");
         return true;
     }
     return false;
